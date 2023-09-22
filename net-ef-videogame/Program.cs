@@ -113,6 +113,20 @@ namespace net_ef_videogame
 
                     //FILTER BY ID
                     case 3:
+                        Console.WriteLine("Search game by id:");
+                        Console.WriteLine("Insert Videogame ID");
+                        long videogameIdToFind = long.Parse(Console.ReadLine());
+
+                        using (VideoGameContext db = new VideoGameContext())
+                        {
+                            List<Videogame> filteredVideogames = db.Videogames.Where(v => v.VideogameId == videogameIdToFind).ToList();
+
+                            foreach (Videogame v in filteredVideogames)
+                            {
+                                Console.WriteLine("- " + v);
+                            }
+                        }
+
 
 
 
@@ -153,4 +167,3 @@ namespace net_ef_videogame
         }
     }
 }
-    
