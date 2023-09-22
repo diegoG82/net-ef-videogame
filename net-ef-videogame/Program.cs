@@ -1,4 +1,7 @@
-﻿namespace net_ef_videogame
+﻿using net_ef_videogame.Database;
+using net_ef_videogame.Models;
+
+namespace net_ef_videogame
 {
     internal class Program
     {
@@ -39,22 +42,79 @@
                             Console.WriteLine("Enter the software house ID of the game: ");
                             long softwareHouseId = long.Parse(Console.ReadLine());
 
+                            Videogame newVideogame = new Videogame()
+                            {
+                                Name = name,
+                                Overview = overview,
+                                ReleaseDate = releasedate,
+                                SoftwareHouseId = softwareHouseId
+                            };
+
+                            using (VideoGameContext db = new VideoGameContext())
+                            {
+                                try
+                                {
+                                    db.Add(newVideogame);
+                                    db.SaveChanges();
+
+                                    Console.WriteLine("Game Added!");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+
+
+                            break;
+
                         }
-                        break;
+
 
 
                     //CREATE A SOFTWARE HOUSE
                     case 2:
 
                         Console.WriteLine("Create a Software House:");
+                        {
+
+                            Console.WriteLine("Enter the name of the software house: ");
+                            string name = Console.ReadLine();
+                            Console.WriteLine("Enter the country of the software house: ");
+                            string country = Console.ReadLine();
 
 
-                        break;
+                            SoftwareHouse newSoftwareHouse = new SoftwareHouse()
+                            {
+                                Name = name,
+                                Country = country,
+
+                            };
+
+                            using (VideoGameContext db = new VideoGameContext())
+                            {
+                                try
+                                {
+                                    db.Add(newSoftwareHouse);
+                                    db.SaveChanges();
+
+                                    Console.WriteLine("Software House Added!");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+                            break;
+                        }
+
+
+
 
                     //FILTER BY ID
                     case 3:
 
-                        Console.WriteLine("Insert Game Id:");
+
 
 
                         break;
@@ -93,3 +153,4 @@
         }
     }
 }
+    

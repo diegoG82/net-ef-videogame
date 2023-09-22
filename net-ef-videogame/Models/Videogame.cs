@@ -9,7 +9,7 @@
 
         //RELAZIONE MOLTI AD 1 UNA SH PER MOLTI VG 
 
-        public int SoftwareHouseId { get; set; }    
+        public long SoftwareHouseId { get; set; }    
         public SoftwareHouse SoftwareHouse { get; set; }
 
 
