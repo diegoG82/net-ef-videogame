@@ -65,12 +65,9 @@ namespace net_ef_videogame
                                 }
                             }
 
-
                             break;
 
                         }
-
-
 
                     //CREATE A SOFTWARE HOUSE
                     case 2:
@@ -113,57 +110,91 @@ namespace net_ef_videogame
 
                     //FILTER BY ID
                     case 3:
-                        Console.WriteLine("Search game by id:");
-                        Console.WriteLine("Insert Videogame ID");
-                        long videogameIdToFind = long.Parse(Console.ReadLine());
-
-                        using (VideoGameContext db = new VideoGameContext())
+                        try
                         {
-                            List<Videogame> filteredVideogames = db.Videogames.Where(v => v.VideogameId == videogameIdToFind).ToList();
+                            Console.WriteLine("Search game by id:");
+                            Console.WriteLine("Insert Videogame ID");
+                            long videogameIdToFind = long.Parse(Console.ReadLine());
 
-                            foreach (Videogame v in filteredVideogames)
+                            using (VideoGameContext db = new VideoGameContext())
                             {
-                                Console.WriteLine("- " + v);
+                                List<Videogame> filteredVideogames = db.Videogames.Where(v => v.VideogameId == videogameIdToFind).ToList();
+
+                                foreach (Videogame v in filteredVideogames)
+                                {
+                                    Console.WriteLine("- " + v);
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+
+
+                        break;
+
+                    //FILTER BY STRING
+
+                    case 4:
+                        try
+                        {
+                            Console.WriteLine("Search game by string:");
+                            Console.WriteLine("write something");
+                            string videogametofind = Console.ReadLine();
+
+                            using (VideoGameContext db = new VideoGameContext())
+                            {
+                                List<Videogame> filteredVideogames = db.Videogames.Where(v => v.Name.Contains(videogametofind)).ToList();
+
+                                foreach (Videogame v in filteredVideogames)
+                                {
+                                    Console.WriteLine("- " + v);
+                                }
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+
+                        }
+
+                        break;
+
+                    //DELETE
+                    case 5:
+
+                        Console.WriteLine("Insert The game Id you want to delete");
+                        long gameToDelete = long.Parse(Console.ReadLine());
+
+                        try
+                        {
+                            using (VideoGameContext db = new VideoGameContext())
+                            {
+                                Videogame Videogame = db.Videogames.Where(Videogame => Videogame.VideogameId == gameToDelete).First();
+                                db.Videogames.Remove(Videogame);
+                                db.SaveChanges();
+                                Console.WriteLine("Videogame deleted");
                             }
                         }
 
-
-
-
-
-                        break;
-                    //FILTER BY STRING
-                    case 4:
+                        catch (Exception ex)
                         {
+                            Console.WriteLine($"Error: {ex.Message}");
 
-
-                            return;
                         }
-
-                    case 5:
-                        Console.Write("Insert the Game Id you want to delete: ");
-
                         break;
-
 
                     case 6:
                         Console.WriteLine("Exiting the program...");
                         return;
 
-
                     default:
                         Console.WriteLine("No options choosed");
                         break;
-
                 }
-
-
             }
-
-
-
-
-
         }
     }
 }
